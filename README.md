@@ -1,0 +1,2 @@
+# claude-code-progress-bar
+
