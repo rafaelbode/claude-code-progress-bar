@@ -46,7 +46,7 @@ Open Claude Code at the root of the project and paste:
 
 ```
 Install the progress bar from this repository into the current project without overwriting anything:
-https://github.com/YOUR-USER/claude-code-progress-bar
+https://github.com/rafaelbode/claude-code-progress-bar
 
 Clone the repository into a temporary folder (outside the project), run
 python <temp-folder>/claude-code-progress-bar/install.py pointing at the root of this project,
@@ -61,7 +61,7 @@ Then restart the Claude Code session. The bar shows up from the next session on.
 At the project root, in Git Bash, Linux or macOS:
 
 ```bash
-git clone --depth 1 https://github.com/YOUR-USER/claude-code-progress-bar /tmp/ccpb \
+git clone --depth 1 https://github.com/rafaelbode/claude-code-progress-bar /tmp/ccpb \
   && python /tmp/ccpb/claude-code-progress-bar/install.py . \
   && rm -rf /tmp/ccpb
 ```
@@ -69,7 +69,7 @@ git clone --depth 1 https://github.com/YOUR-USER/claude-code-progress-bar /tmp/c
 In PowerShell:
 
 ```powershell
-git clone --depth 1 https://github.com/YOUR-USER/claude-code-progress-bar $env:TEMP\ccpb
+git clone --depth 1 https://github.com/rafaelbode/claude-code-progress-bar $env:TEMP\ccpb
 python $env:TEMP\ccpb\claude-code-progress-bar\install.py .
 Remove-Item -Recurse -Force $env:TEMP\ccpb
 ```
