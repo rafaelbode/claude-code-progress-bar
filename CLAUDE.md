@@ -1,38 +1,38 @@
-<!-- claude-code-progress-bar:inicio -->
-# Barra de progresso na status line
+<!-- claude-code-progress-bar:start -->
+# Progress bar in the status line
 
-A status line deste projeto mostra uma barra de progresso lida de `.claude/progresso.json`.
-Você (Claude) é quem mantém esse arquivo. Regras:
+This project's status line shows a progress bar read from `.claude/progress.json`.
+You (Claude) maintain that file. Rules:
 
-## Quando usar
-- Pedido com **mais de uma etapa**: no começo (ou ao fechar o planejamento, antes de executar),
-  escreva a lista de etapas no arquivo.
-- Pedido de **uma etapa só**: não mexe no arquivo.
-- Atualize **só nas etapas grandes**, não a cada passo miúdo (não gaste token com isso).
+## When to use it
+- Request with **more than one step**: at the start (or when planning is done, before executing),
+  write the list of steps to the file.
+- **Single-step** request: leave the file alone.
+- Update it **only on major steps**, not on every small action (don't spend tokens on it).
 
-## Formato (dois níveis, ambos opcionais)
+## Format (two levels, both optional)
 ```json
 {
-  "geral":  {"pedido": "objetivo maior da sessão/projeto", "etapas": [{"nome": "...", "feita": false}], "atual": "..."},
-  "pedido": {"pedido": "resumo do ÚLTIMO pedido em uma linha", "etapas": [{"nome": "...", "feita": true}], "atual": "nome da etapa em andamento"}
+  "overall": {"summary": "bigger goal of the session/project", "steps": [{"name": "...", "done": false}], "current": "..."},
+  "request": {"summary": "one-line summary of the LAST request", "steps": [{"name": "...", "done": true}], "current": "name of the step in progress"}
 }
 ```
-- `pedido` = o último pedido do usuário (ex.: "atualizar tabela HTML"). É o nível que mais muda.
-- `geral` = o objetivo maior quando o usuário está numa sequência de pedidos ligados
-  (ex.: "reformar a página de relatórios"). Só preencha quando esse contexto existir;
-  o pedido atual costuma ser uma etapa do geral: marque-a feita no `geral` ao terminar o pedido.
-- O formato plano `{"pedido": "texto", "etapas": [...], "atual": "..."}` também é aceito
-  e equivale a só o bloco `pedido`.
+- `request` = the user's last request (e.g. "update HTML table"). This is the level that changes most.
+- `overall` = the bigger goal when the user is working through a sequence of related requests
+  (e.g. "rebuild the reports page"). Fill it only when that context exists; the current request
+  is usually one step of `overall`: mark it done there when the request is finished.
+- The flat format `{"summary": "text", "steps": [...], "current": "..."}` is also accepted
+  and means just the `request` block.
 
-## Ciclo
-1. **Planejamento**: defina as etapas e escreva o arquivo já com todas em `feita: false`
-   e `atual` = primeira etapa.
-2. **Ao concluir uma etapa**: marque `feita: true` e troque `atual` para a próxima.
-3. **Se o pedido mudar de rumo**: reescreva a lista inteira.
-4. **Novo pedido**: substitua o bloco `pedido`; mantenha o `geral` se ainda valer.
-5. **Ao retomar sessão (contexto resumido)**: leia o arquivo antes de continuar e siga dele.
-6. **Tudo pronto**: deixe todas as etapas `feita: true` (a barra fica cheia). Não precisa apagar.
+## Cycle
+1. **Planning**: define the steps and write the file with all of them `done: false`
+   and `current` = first step.
+2. **When a step is finished**: set `done: true` and move `current` to the next one.
+3. **If the request changes direction**: rewrite the whole list.
+4. **New request**: replace the `request` block; keep `overall` if it still applies.
+5. **Resuming a session (summarized context)**: read the file before continuing and pick up from it.
+6. **All done**: leave every step `done: true` (the bar fills up). No need to delete the file.
 
-Edite o arquivo com uma escrita direta (Write/heredoc), sem ler antes se já souber o conteúdo.
-A skill `/progresso` tem exemplos prontos.
-<!-- claude-code-progress-bar:fim -->
+Write the file directly (Write/heredoc), without reading it first if you already know its content.
+The `/progress` skill has ready-made templates.
+<!-- claude-code-progress-bar:end -->
