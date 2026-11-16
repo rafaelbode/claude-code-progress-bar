@@ -37,6 +37,7 @@ The installer:
 - appends the rules section to the **end** of `CLAUDE.md` between markers,
   without touching what was already written;
 - adds `.claude/progress.json` to `.gitignore`.
+- writes `.claude/progress-bar.manifest.json` with what it added, so `--uninstall` removes only that.
 
 Then restart the Claude Code session. The bar only appears after you accept the folder
 trust prompt, because the status line runs a command.
@@ -50,7 +51,7 @@ After installing you can delete the `claude-code-progress-bar/` folder from the 
 3. Paste the content of `CLAUDE-snippet.md` at the end of your `CLAUDE.md`.
 4. In `.claude/settings.json`, add the key from `settings-snippet.json`.
    Use an absolute path with forward slashes in `command`, for example
-   `python C:/my/project/.claude/statusline.py`, because Claude Code does not guarantee
+   `python -I C:/my/project/.claude/statusline.py`, because Claude Code does not guarantee
    which folder the command runs in.
 
 ## `.claude/progress.json` format
@@ -77,6 +78,7 @@ echo '{}' | python .claude/statusline.py
 python claude-code-progress-bar/install.py --uninstall
 ```
 
-Removes only what the installer added: the script, the skill, the `statusLine` key
-and the section between markers in CLAUDE.md. Or, by hand, delete the `statusLine` key
+Removes only what the installer added, according to the manifest: the script, the skill, the
+`statusLine` key and the section between markers in CLAUDE.md. A `statusline.py` or skill that
+was already in the project before installing is left alone. Or, by hand, delete the `statusLine` key
 from `.claude/settings.json` (the rules in CLAUDE.md can stay, they don't get in the way).

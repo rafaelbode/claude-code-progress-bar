@@ -85,12 +85,17 @@ def normalize(block):
         pending = [pick(s, "name", "nome") or "" for s in steps if not pick(s, "done", "feita")]
         current = pending[0] if pending else "done"
     summary = pick(block, "summary", "pedido", "name", "nome") or ""
-    return str(summary).strip(), done, total, str(current).strip()
+    return clean(summary), done, total, clean(current)
 
 
 def bar(done, total):
     filled = round(BAR_WIDTH * done / total) if total else 0
     return FULL * filled + EMPTY * (BAR_WIDTH - filled)
+
+
+def clean(text):
+    """Drop control characters so a crafted file cannot inject ANSI/OSC sequences."""
+    return "".join(ch for ch in str(text) if ord(ch) >= 0x20 and ord(ch) != 0x7F).strip()
 
 
 def truncate(text, limit):
@@ -102,7 +107,7 @@ def truncate(text, limit):
 def default_line(stdin_data):
     model = (stdin_data.get("model") or {}).get("display_name") or ""
     folder = (stdin_data.get("workspace") or {}).get("current_dir") or stdin_data.get("cwd") or os.getcwd()
-    parts = [p for p in (model, os.path.basename(folder.rstrip("/\\")) or folder) if p]
+    parts = [clean(p) for p in (model, os.path.basename(folder.rstrip("/\\")) or folder) if p]
     return truncate(" · ".join(parts), MAX_WIDTH)
 
 

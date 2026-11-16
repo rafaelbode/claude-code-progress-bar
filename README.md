@@ -94,6 +94,7 @@ You can delete the copied folder afterwards. For a manual, file-by-file install,
 | `CLAUDE.md` → section between markers | the rules Claude follows to keep the progress file |
 | `.claude/skills/progress/SKILL.md` | the `/progress` skill with JSON templates |
 | `.gitignore` → `.claude/progress.json` | the progress file is session state, it stays out of git |
+| `.claude/progress-bar.manifest.json` | record of what the installer added, so uninstall removes only that |
 
 ## Usage
 
@@ -166,3 +167,6 @@ To turn off just the bar and keep the rest, delete the `statusLine` key from
   Code doesn't guarantee which folder the command runs in. If you move the project, run the
   installer again or fix the path in `settings.json`.
 - The script finds `progress.json` through the `project_dir` that Claude Code sends on stdin.
+- The command runs `python -I` (isolated mode), so a stray `json.py` or `os.py` dropped into `.claude/`
+  cannot be imported in place of the standard library. The script also strips control characters
+  from the progress file before printing, so a crafted file cannot inject terminal escape sequences.

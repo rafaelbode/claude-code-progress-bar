@@ -1,6 +1,6 @@
 {
   "statusLine": {
     "type": "command",
-    "command": "python C:/App/git/claude-code-progress-bar/.claude/statusline.py"
+    "command": "python -I c:/App/git/claude-code-progress-bar/.claude/statusline.py"
   }
 }
